@@ -59,6 +59,7 @@ public class Fly extends Module {
             "Verus",
             "Verus2",
             "Verus3",
+            "VerusNoDamage",
 
             // AAC
             "AAC1.9.10",
@@ -206,6 +207,8 @@ public class Fly extends Module {
     private float launchPitch=0;
 
     private int flyTick;
+
+    private boolean spoofGround = false;
 
     @Override
     public void onEnable() {
@@ -949,6 +952,19 @@ public class Fly extends Module {
                     sendAAC5Packets();
                 }
             }
+            if(modeValue.get().equalsIgnoreCase("VerusNoDamage") && startY == mc.thePlayer.posY){
+
+                if(spoofGround){
+                    packetPlayer.y = packetPlayer.y + 0.02;
+                    packetPlayer.onGround = true;
+
+                }else{
+                    packetPlayer.onGround = false;
+                }
+                spoofGround = !spoofGround;
+
+
+            }
         }
 
         if(packet instanceof S08PacketPlayerPosLook) {
@@ -1116,7 +1132,7 @@ public class Fly extends Module {
                 mode.equalsIgnoreCase("BoostHypixel") || mode.equalsIgnoreCase("Rewinside") ||
                 (mode.equalsIgnoreCase("Mineplex") && mc.thePlayer.inventory.getCurrentItem() == null)) && event.getY() < mc.thePlayer.posY)
             event.setBoundingBox(AxisAlignedBB.fromBounds(event.getX(), event.getY(), event.getZ(), event.getX() + 1, mc.thePlayer.posY, event.getZ() + 1));
-        if((mode.equalsIgnoreCase("FakeGround") || mode.equalsIgnoreCase("Verus") || mode.equalsIgnoreCase("Verus3") || mode.equalsIgnoreCase("Verus2"))
+        if((mode.equalsIgnoreCase("FakeGround") || mode.equalsIgnoreCase("Verus") || mode.equalsIgnoreCase("Verus3") || mode.equalsIgnoreCase("Verus2") || mode.equalsIgnoreCase("VerusNoDamage"))
                 && event.getBlock() instanceof BlockAir && event.getY() <= launchY)
             event.setBoundingBox(AxisAlignedBB.fromBounds(event.getX(), event.getY(), event.getZ(), event.getX() + 1, launchY, event.getZ() + 1));
     }
