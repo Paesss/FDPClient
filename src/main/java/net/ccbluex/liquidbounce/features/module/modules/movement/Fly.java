@@ -952,18 +952,15 @@ public class Fly extends Module {
                     sendAAC5Packets();
                 }
             }
+
             if(modeValue.get().equalsIgnoreCase("VerusNoDamage") && startY == mc.thePlayer.posY){
-
                 if(spoofGround){
-                    packetPlayer.y = packetPlayer.y + 0.02;
+                    packetPlayer.y += 0.02;
                     packetPlayer.onGround = true;
-
                 }else{
                     packetPlayer.onGround = false;
                 }
                 spoofGround = !spoofGround;
-
-
             }
         }
 
