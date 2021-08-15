@@ -77,17 +77,20 @@ open class Module : MinecraftInstance(), Listenable {
         moduleCommand = moduleInfo.moduleCommand
     }
 
-    fun loadLocale(){
+    fun onLoad(){
         if(this !is ScriptModule){
             localizedName="%module.$name.name%"
             values.forEach {
                 it.localedName="%module.$name.value.${it.name}.name%"
             }
         }
+        if(moduleInfo.defaultOn){
+            state=true
+        }
     }
 
     // Current state of module
-    var state = moduleInfo.defaultOn
+    var state = false
         set(value) {
             if (field == value) return
 
@@ -144,9 +147,7 @@ open class Module : MinecraftInstance(), Listenable {
         state = !state
     }
 
-    fun chat(msg: String){
-        ClientUtils.displayAlert(msg)
-    }
+    protected fun chat(msg: String) = ClientUtils.displayAlert(msg)
 
     /**
      * Called when module toggled
