@@ -954,7 +954,6 @@ public class Fly extends Module {
                 }
             }
 
-            if(modeValue.get().equalsIgnoreCase("VerusNoDamage") && startY == mc.thePlayer.posY){
             if(modeValue.get().equalsIgnoreCase("VerusOldNoDown") && startY == mc.thePlayer.posY){
                 MovementUtils.setMotion(verusOldNoDownSpeed.get());
                 if(spoofGround){
