@@ -59,7 +59,7 @@ public class Fly extends Module {
             "Verus",
             "Verus2",
             "Verus3",
-            "VerusNoDamage",
+            "VerusOldNoDown",
 
             // AAC
             "AAC1.9.10",
@@ -149,6 +149,7 @@ public class Fly extends Module {
     private final BoolValue aac520view = new BoolValue("AAC5.2.0BetterView", false);
     private final BoolValue rssDropoff = new BoolValue("RSSmoothDropoffA", true);
 
+    private final FloatValue verusOldNoDownSpeed = new FloatValue("VerusOldNoDownSpeed", 0.54f, 0.0f, 2f);
     private final BoolValue motionResetValue = new BoolValue("MotionReset", false);
 
     // Visuals
@@ -954,6 +955,8 @@ public class Fly extends Module {
             }
 
             if(modeValue.get().equalsIgnoreCase("VerusNoDamage") && startY == mc.thePlayer.posY){
+            if(modeValue.get().equalsIgnoreCase("VerusOldNoDown") && startY == mc.thePlayer.posY){
+                MovementUtils.setMotion(verusOldNoDownSpeed.get());
                 if(spoofGround){
                     packetPlayer.y += 0.02;
                     packetPlayer.onGround = true;
@@ -1129,7 +1132,7 @@ public class Fly extends Module {
                 mode.equalsIgnoreCase("BoostHypixel") || mode.equalsIgnoreCase("Rewinside") ||
                 (mode.equalsIgnoreCase("Mineplex") && mc.thePlayer.inventory.getCurrentItem() == null)) && event.getY() < mc.thePlayer.posY)
             event.setBoundingBox(AxisAlignedBB.fromBounds(event.getX(), event.getY(), event.getZ(), event.getX() + 1, mc.thePlayer.posY, event.getZ() + 1));
-        if((mode.equalsIgnoreCase("FakeGround") || mode.equalsIgnoreCase("Verus") || mode.equalsIgnoreCase("Verus3") || mode.equalsIgnoreCase("Verus2") || mode.equalsIgnoreCase("VerusNoDamage"))
+        if((mode.equalsIgnoreCase("FakeGround") || mode.equalsIgnoreCase("Verus") || mode.equalsIgnoreCase("Verus3") || mode.equalsIgnoreCase("Verus2") || mode.equalsIgnoreCase("VerusOldNoDown"))
                 && event.getBlock() instanceof BlockAir && event.getY() <= launchY)
             event.setBoundingBox(AxisAlignedBB.fromBounds(event.getX(), event.getY(), event.getZ(), event.getX() + 1, launchY, event.getZ() + 1));
     }
